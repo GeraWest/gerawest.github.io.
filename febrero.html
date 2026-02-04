@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>¿Quieres ser mi San Valentín?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            position: relative;
+        }
+
+        /* Botón de música */
+        .music-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.9);
+            color: #ff4d6d;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+            z-index: 999;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .page {
+            display: none;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 500px;
+            width: 90%;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 15px 35px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .yes {
+            background: #ff4d6d;
+            color: white;
+        }
+
+        .no {
+            background: #ffffff;
+            color: #ff4d6d;
+        }
+
+        .back {
+            background: #fff;
+            color: #ff4d6d;
+            margin-top: 20px;
+        }
+
+        /* Corazón */
+        .heart {
+            width: 120px;
+            height: 120px;
+            background: #ff4d6d;
+            position: relative;
+            transform: rotate(-45deg);
+            margin: 40px auto;
+            animation: pulse 1.2s infinite;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            width: 120px;
+            height: 120px;
+            background: #ff4d6d;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .heart::before {
+            top: -60px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 60px;
+            top: 0;
+        }
+
+        @keyframes pulse {
+            0% { transform: rotate(-45deg) scale(1); }
+            50% { transform: rotate(-45deg) scale(1.1); }
+            100% { transform: rotate(-45deg) scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="music" loop>
+        <source src="yaz.mp3" type="audio/mpeg">
+        Tu navegador no soporta audio.
+    </audio>
+
+    <button class="music-btn" onclick="toggleMusic()"> Reproducir</button>
+
+    <div class="page active" id="home">
+        <h1>Ola mi vida</h1>
+        <p>
+            Desde que llegaste a mi vida, todo tiene más color.<br>
+            Hoy quiero preguntarte algo muy especial...
+        </p>
+        <div class="buttons">
+            <button class="yes" onclick="goTo('question')">Continuar</button>
+        </div>
+    </div>
+
+    <div class="page" id="question">
+        <h1>¿Aceptas ser mi San Valentín?</h1>
+        <div class="buttons">
+            <button class="yes" onclick="goTo('yesPage')">Si</button>
+            <button class="no" onclick="goTo('noPage')">No</button>
+        </div>
+    </div>
+
+    <!-- Página SÍ -->
+    <div class="page" id="yesPage">
+        <h1>Te amo mi amor bella, eres la Antonella de mi Messi <3</h1>
+        <div class="heart"></div>
+        <p>
+            Prometo cuidarte, hacerte reír y amarte<br>
+            no solo hoy, sino todos los días mi vida
+        </p>
+        <h3>Si lo hice yo por si tenias duda, sabes que soy cabrón para el html</h3>
+    </div>
+
+
+    <div class="page" id="noPage">
+        <h1>¿Seguraaaaaaaaa?</h1>
+        <p>Fan del temach si no</p>
+        <button class="back" onclick="goTo('question')">Volver</button>
+    </div>
+
+    <script>
+        const music = document.getElementById('music');
+        const musicBtn = document.querySelector('.music-btn');
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.volume = 0.5;
+                music.play();
+                musicBtn.textContent = "⏸ Pausar";
+            } else {
+                music.pause();
+                musicBtn.textContent = " Reproducir";
+            }
+        }
+
+        function goTo(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
